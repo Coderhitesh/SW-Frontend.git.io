@@ -21,28 +21,6 @@ const FinalCart = () => {
 
     const FinalPrice = JSON.parse(localStorage.getItem('swFinalPrice')); // Set default value as "{}" (empty object) if no data found
 
-    if (!token) {
-        return <>
-            
-            <div className="section my-2 my-md-3">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-8 mx-auto">
-                            <div class="alert alert-warning h6 text-center" role="alert">
-                                <div>You Are Not Loged In,</div>
-                                <div className='mt-1'>Please Login First</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <Login/>
-        </>
-        // window.location.href = "/login";
-    }
-
-    console.log(MakeOrder);
     const [Order, setOrder] = useState({
         items: MakeOrder || [],
         address: {
@@ -128,7 +106,7 @@ const FinalCart = () => {
 
                 console.log('Order creation response:', response.data);
                 sessionStorage.setItem('orderData', JSON.stringify(Order));
-                toast.success("Order Placed SuccessFully !!")
+                toast.success("Order Placed Successfully!!")
 
                 setTimeout(() => {
                     // window.location.href = "/";
@@ -142,9 +120,31 @@ const FinalCart = () => {
         }
     };
 
+    // Render different content based on whether the user is logged in
+    if (!token) {
+        return (
+            <>
+                <div className="section my-2 my-md-3">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-md-8 mx-auto">
+                                <div className="alert alert-warning h6 text-center" role="alert">
+                                    <div>You Are Not Logged In,</div>
+                                    <div className='mt-1'>Please Login First</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <Login />
+            </>
+        );
+    }
+
     return (
         <>
-        <ToastContainer />
+            <ToastContainer />
             <section className="bread">
                 <div className="container">
                     <nav aria-label="breadcrumb ">
